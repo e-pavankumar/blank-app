@@ -1,6 +1,15 @@
 import streamlit as st
+from sql_chain import ask_question
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+st.title("🧠 Text-to-SQL Generator using Gemini")
+
+query = st.text_input("Ask a question about the database:")
+
+if st.button("Generate SQL & Run"):
+    with st.spinner("Generating SQL..."):
+        try:
+            result = ask_question(query)
+            st.success("Result:")
+            st.write(result)
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
